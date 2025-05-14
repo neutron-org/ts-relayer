@@ -245,6 +245,9 @@ export function parsePacket({ type, attributes }: Event): Packet {
     {},
   );
 
+  console.log(
+    'packet_data_hex: ' + attributesObj.packet_data_hex + '\n'
+  );
   return Packet.fromPartial({
     sequence: may(BigInt, attributesObj.packet_sequence),
     /** identifies the port on the sending chain. */
@@ -256,8 +259,8 @@ export function parsePacket({ type, attributes }: Event): Packet {
     /** identifies the channel end on the receiving chain. */
     destinationChannel: attributesObj.packet_dst_channel,
     /** actual opaque bytes transferred directly to the application module */
-    data: attributesObj.packet_data
-      ? toUtf8(attributesObj.packet_data)
+    data: attributesObj.packet_data_hex
+      ? Uint8Array.from(Buffer.from(attributesObj.packet_data_hex.replace(/^0x/, ''), 'hex'))
       : undefined,
     /** block height after which the packet times out */
     timeoutHeight: parseHeightAttribute(attributesObj.packet_timeout_height),
@@ -294,7 +297,8 @@ export function parseAck({ type, attributes }: Event): Ack {
     /** identifies the channel end on the receiving chain. */
     destinationChannel: attributesObj.packet_dst_channel,
     /** actual opaque bytes transferred directly to the application module */
-    data: toUtf8(attributesObj.packet_data ?? ""),
+    data: attributesObj.packet_data_hex ?
+      Uint8Array.from(Buffer.from(attributesObj.packet_data_hex.replace(/^0x/, ''), 'hex')) : toUtf8(""),
     /** block height after which the packet times out */
     timeoutHeight: parseHeightAttribute(attributesObj.packet_timeout_height),
     /** block timestamp (in nanoseconds) after which the packet times out */
