@@ -2,20 +2,20 @@ import fs from "fs";
 import os from "os";
 
 import test from "ava";
-import { State as ChannelState } from "cosmjs-types/ibc/core/channel/v1/channel";
+import { State as ChannelState } from "cosmjs-types/ibc/core/channel/v1/channel.js";
 import sinon from "sinon";
 
-import { testutils } from "../../../lib";
-import { ChannelPair, Link } from "../../../lib/link";
-import { Logger } from "../../create-logger";
-import { signingClient } from "../../utils/signing-client";
+import { testutils } from "../../../lib/index.js";
+import { ChannelPair, Link } from "../../../lib/link.js";
+import { Logger } from "../../create-logger.js";
+import { signingClient } from "../../utils/signing-client.js";
 
 const { TestLogger } = testutils;
 
 const { ics20 } = testutils;
 
-import { gaiaChain, wasmdChain } from "./chains";
-import { channelStateAsText, Options, run } from "./channels";
+import { gaiaChain, wasmdChain } from "./chains.js";
+import { channelStateAsText, Options, run } from "./channels.js";
 
 const fsReadFileSync = sinon.stub(fs, "readFileSync");
 const consoleLog = sinon.stub(console, "log");

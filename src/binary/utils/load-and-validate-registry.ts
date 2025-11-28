@@ -1,59 +1,70 @@
 import fs from "fs";
 import os from "os";
 
-import Ajv, { JSONSchemaType } from "ajv";
+import * as AjvModule from "ajv";
 import yaml from "js-yaml";
 
-import { registryFile } from "../constants";
-import { Registry } from "../types";
+import { registryFile } from "../constants.js";
+import { Registry } from "../types.js";
+
+// Handle CommonJS default export
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const Ajv = (AjvModule as any).default || AjvModule;
 
 export function loadAndValidateRegistry(filepath: string): Registry {
-  const registry = yaml.load(fs.readFileSync(filepath, "utf-8"));
+  const registry = yaml.load(fs.readFileSync(filepath, "utf-8")) as unknown;
 
   const ajv = new Ajv({ allErrors: true });
-  const schema: JSONSchemaType<Registry> = {
+  // Note: Not using JSONSchemaType<Registry> because it doesn't support patternProperties well
+  // The schema below provides runtime validation; TypeScript validates at compile time
+  const schema = {
     type: "object",
-    required: ["chains", "version"],
+    required: ["version", "chains"],
     additionalProperties: false,
     properties: {
-      version: {
-        type: "number",
-      },
+      version: { type: "number" },
       chains: {
         type: "object",
         minProperties: 2,
-        required: [],
         additionalProperties: false,
         patternProperties: {
           "^(.*)$": {
             type: "object",
-            required: ["chain_id", "gas_price", "prefix", "rpc"],
+            required: [
+              "chain_id",
+              "prefix",
+              "gas_price",
+              "rpc",
+              "estimated_block_time",
+              "estimated_indexer_time",
+            ],
             additionalProperties: false,
             properties: {
               chain_id: { type: "string" },
               prefix: { type: "string" },
               gas_price: { type: "string" },
-              faucet: { type: "string", nullable: true },
-              hd_path: { type: "string", nullable: true },
-              ics20_port: { type: "string", nullable: true },
+              faucet: { type: "string" },
+              hd_path: { type: "string" },
+              ics20_port: { type: "string" },
               rpc: { type: "array", items: { type: "string" }, minItems: 1 },
-              estimated_block_time: { type: "number", nullable: true },
-              estimated_indexer_time: { type: "number", nullable: true },
+              estimated_block_time: { type: "number" },
+              estimated_indexer_time: { type: "number" },
             },
           },
         },
       },
     },
-  };
+  } as const;
   const validate = ajv.compile(schema);
   if (!validate(registry)) {
     const errors = (validate.errors ?? []).map(
-      ({ dataPath, message }) => `"${dataPath}" ${message}`,
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      ({ instancePath, message }: any) => `"${instancePath}" ${message}`,
     );
     throw new Error(
       [`${registryFile} validation failed.`, ...errors].join(os.EOL),
     );
   }
 
-  return registry;
+  return registry as Registry;
 }

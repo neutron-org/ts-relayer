@@ -2,22 +2,22 @@ import fs from "fs";
 import os from "os";
 import path from "path";
 
-import { Order } from "cosmjs-types/ibc/core/channel/v1/channel";
+import { Order } from "cosmjs-types/ibc/core/channel/v1/channel.js";
 import yaml from "js-yaml";
 
-import { IbcClient } from "../../../lib/ibcclient";
-import { Link } from "../../../lib/link";
-import { appFile, registryFile } from "../../constants";
-import { Logger } from "../../create-logger";
-import { AppConfig } from "../../types";
-import { indent } from "../../utils/indent";
-import { loadAndValidateApp } from "../../utils/load-and-validate-app";
-import { loadAndValidateRegistry } from "../../utils/load-and-validate-registry";
-import { resolveOption } from "../../utils/options/resolve-option";
-import { resolveHomeOption } from "../../utils/options/shared/resolve-home-option";
-import { resolveKeyFileOption } from "../../utils/options/shared/resolve-key-file-option";
-import { resolveMnemonicOption } from "../../utils/options/shared/resolve-mnemonic-option";
-import { signingClient } from "../../utils/signing-client";
+import { IbcClient } from "../../../lib/ibcclient.js";
+import { Link } from "../../../lib/link.js";
+import { appFile, registryFile } from "../../constants.js";
+import { Logger } from "../../create-logger.js";
+import { AppConfig } from "../../types.js";
+import { indent } from "../../utils/indent.js";
+import { loadAndValidateApp } from "../../utils/load-and-validate-app.js";
+import { loadAndValidateRegistry } from "../../utils/load-and-validate-registry.js";
+import { resolveOption } from "../../utils/options/resolve-option.js";
+import { resolveHomeOption } from "../../utils/options/shared/resolve-home-option.js";
+import { resolveKeyFileOption } from "../../utils/options/shared/resolve-key-file-option.js";
+import { resolveMnemonicOption } from "../../utils/options/shared/resolve-mnemonic-option.js";
+import { signingClient } from "../../utils/signing-client.js";
 
 type Connections = {
   src: string;

@@ -1,8 +1,8 @@
 import fs from "fs";
 
-import { Logger } from "../../create-logger";
-import { generateMnemonic } from "../../utils/generate-mnemonic";
-import { resolveOption } from "../../utils/options/resolve-option";
+import { Logger } from "../../create-logger.js";
+import { generateMnemonic } from "../../utils/generate-mnemonic.js";
+import { resolveOption } from "../../utils/options/resolve-option.js";
 
 export type Flags = {
   readonly keyFile?: string;

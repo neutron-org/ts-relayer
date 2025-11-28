@@ -2,7 +2,7 @@ import { readFileSync } from "fs";
 
 import { fromUtf8 } from "@cosmjs/encoding";
 
-import { AckWithMetadata, RelayInfo, testutils } from "..";
+import { AckWithMetadata, RelayInfo, testutils } from "../lib/index.js";
 const { setupWasmClient } = testutils;
 
 export async function setupContracts(

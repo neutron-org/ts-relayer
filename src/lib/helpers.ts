@@ -8,11 +8,11 @@ import { Bip39, Random } from "@cosmjs/crypto";
 import { toBech32 } from "@cosmjs/encoding";
 import { DirectSecp256k1HdWallet } from "@cosmjs/proto-signing";
 import { GasPrice, StargateClient } from "@cosmjs/stargate";
-import { Order } from "cosmjs-types/ibc/core/channel/v1/channel";
+import { Order } from "cosmjs-types/ibc/core/channel/v1/channel.js";
 import sinon, { SinonSpy } from "sinon";
 
-import { ChannelInfo, IbcClient, IbcClientOptions } from "./ibcclient";
-import { Logger, LogMethod } from "./logger";
+import { ChannelInfo, IbcClient, IbcClientOptions } from "./ibcclient.js";
+import { Logger, LogMethod } from "./logger.js";
 
 export class TestLogger implements Logger {
   public readonly error: SinonSpy & LogMethod;

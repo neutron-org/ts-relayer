@@ -1,28 +1,32 @@
 import { arrayContentEquals, isDefined } from "@cosmjs/utils";
-import { Order, Packet, State } from "cosmjs-types/ibc/core/channel/v1/channel";
-import { Height } from "cosmjs-types/ibc/core/client/v1/client";
+import {
+  Order,
+  Packet,
+  State,
+} from "cosmjs-types/ibc/core/channel/v1/channel.js";
+import { Height } from "cosmjs-types/ibc/core/client/v1/client.js";
 
 import {
   AckWithMetadata,
   Endpoint,
   PacketWithMetadata,
   QueryOpts,
-} from "./endpoint";
+} from "./endpoint.js";
 import {
   buildCreateClientArgs,
   ChannelInfo,
   IbcClient,
   prepareChannelHandshake,
   prepareConnectionHandshake,
-} from "./ibcclient";
-import { Logger, NoopLogger } from "./logger";
+} from "./ibcclient.js";
+import { Logger, NoopLogger } from "./logger.js";
 import {
   parseAcksFromTxEvents,
   secondsFromDateNanos,
   splitPendingPackets,
   timestampFromDateNanos,
   toIntHeight,
-} from "./utils";
+} from "./utils.js";
 
 /**
  * Many actions on link focus on a src and a dest. Rather than add two functions,

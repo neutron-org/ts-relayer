@@ -15,7 +15,7 @@ import {
   secondsFromDateNanos,
   timeGreater,
   timestampFromDateNanos,
-} from "./utils";
+} from "./utils.js";
 
 test("parsePacketsFromEvents", (t) => {
   // From https://gist.github.com/webmaster128/14d273b3b462c1c653f51e3e1edb8cd5
