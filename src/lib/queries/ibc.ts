@@ -5,6 +5,7 @@ import {
   createProtobufRpcClient,
   QueryClient,
 } from "@cosmjs/stargate";
+import { AbciQueryResponse } from "@cosmjs/tendermint-rpc";
 import { CommitmentProof } from "cosmjs-types/cosmos/ics23/v1/proofs.js";
 import { Any } from "cosmjs-types/google/protobuf/any.js";
 import { Channel } from "cosmjs-types/ibc/core/channel/v1/channel.js";
@@ -73,7 +74,7 @@ async function queryRawProof(
   const path = `/store/${store}/key`;
   // Use queryAbci which is still available
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const response = await (client as any).cometClient.abciQuery({
+  const response: AbciQueryResponse = await (client as any).cometClient.abciQuery({
     path,
     data: queryKey,
     prove: true,
@@ -84,10 +85,14 @@ async function queryRawProof(
     throw new Error(`Query failed with code ${response.code}: ${response.log}`);
   }
 
+  if (!response.height) {
+    throw new Error(`Query failed with no height: ${response.log}`);
+  }
+
   return {
     key: response.key,
     value: response.value,
-    proof: response.proof ? ProofOps.decode(response.proof) : { ops: [] },
+    proof: response.proof ? { ops: [...response.proof.ops] } : { ops: [] },
     height: response.height,
   };
 }
