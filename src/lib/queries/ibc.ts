@@ -74,7 +74,9 @@ async function queryRawProof(
   const path = `/store/${store}/key`;
   // Use queryAbci which is still available
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const response: AbciQueryResponse = await (client as any).cometClient.abciQuery({
+  const response: AbciQueryResponse = await (
+    client as any
+  ).cometClient.abciQuery({
     path,
     data: queryKey,
     prove: true,

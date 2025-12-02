@@ -318,7 +318,11 @@ export function parseAck({ type, attributes }: Event): Ack {
     /** block timestamp (in nanoseconds) after which the packet times out */
     timeoutTimestamp: may(BigInt, attributesObj.packet_timeout_timestamp),
   });
-  const acknowledgement = toUtf8(attributesObj.packet_ack ?? "");
+  const acknowledgement = attributesObj.packet_ack_hex
+    ? Uint8Array.from(
+        Buffer.from(attributesObj.packet_ack_hex.replace(/^0x/, ""), "hex"),
+      )
+    : toUtf8(attributesObj.packet_ack ?? "");
   return {
     acknowledgement,
     originalPacket,

@@ -1,4 +1,4 @@
-import { fromBase64, fromHex } from "@cosmjs/encoding";
+import { fromBase64, fromHex, toUtf8 } from "@cosmjs/encoding";
 import {
   fromRfc3339WithNanoseconds,
   ReadonlyDateWithNanoseconds,
@@ -8,6 +8,7 @@ import test from "ava";
 
 import {
   heightGreater,
+  parseAck,
   parseHeightAttribute,
   parsePacketsFromEvents,
   parsePacketsFromTendermintEvents,
@@ -596,4 +597,75 @@ test("Properly determines height-based timeouts", (t) => {
 
   // zero value is defined as missing
   t.is(parseHeightAttribute("0-0"), undefined);
+});
+
+test("parseAck handles packet_ack_hex attribute", (t) => {
+  const event = {
+    type: "write_acknowledgement",
+    attributes: [
+      { key: "packet_sequence", value: "123" },
+      { key: "packet_src_port", value: "transfer" },
+      { key: "packet_src_channel", value: "channel-0" },
+      { key: "packet_dst_port", value: "transfer" },
+      { key: "packet_dst_channel", value: "channel-1" },
+      { key: "packet_data_hex", value: "7b22616d6f756e74223a2231303030227d" },
+      {
+        key: "packet_ack_hex",
+        value: "7b22726573756c74223a22737563636573732d6163636b227d",
+      },
+      { key: "packet_timeout_height", value: "0-0" },
+      { key: "packet_timeout_timestamp", value: "1234567890" },
+    ],
+  };
+
+  const ack = parseAck(event);
+  t.is(ack.originalPacket.sequence, 123n);
+  t.is(ack.originalPacket.sourcePort, "transfer");
+  t.is(ack.originalPacket.sourceChannel, "channel-0");
+  t.deepEqual(
+    ack.acknowledgement,
+    fromHex("7b22726573756c74223a22737563636573732d6163636b227d"),
+  );
+});
+
+test("parseAck handles packet_ack attribute for backward compatibility", (t) => {
+  const event = {
+    type: "write_acknowledgement",
+    attributes: [
+      { key: "packet_sequence", value: "456" },
+      { key: "packet_src_port", value: "transfer" },
+      { key: "packet_src_channel", value: "channel-2" },
+      { key: "packet_dst_port", value: "transfer" },
+      { key: "packet_dst_channel", value: "channel-3" },
+      { key: "packet_data_hex", value: "7b22616d6f756e74223a2232303030227d" },
+      { key: "packet_ack", value: '{"result":"success"}' },
+      { key: "packet_timeout_height", value: "0-0" },
+      { key: "packet_timeout_timestamp", value: "9876543210" },
+    ],
+  };
+
+  const ack = parseAck(event);
+  t.is(ack.originalPacket.sequence, 456n);
+  t.deepEqual(ack.acknowledgement, toUtf8('{"result":"success"}'));
+});
+
+test("parseAck handles missing acknowledgement with empty bytes", (t) => {
+  const event = {
+    type: "write_acknowledgement",
+    attributes: [
+      { key: "packet_sequence", value: "789" },
+      { key: "packet_src_port", value: "transfer" },
+      { key: "packet_src_channel", value: "channel-4" },
+      { key: "packet_dst_port", value: "transfer" },
+      { key: "packet_dst_channel", value: "channel-5" },
+      { key: "packet_data_hex", value: "7b22616d6f756e74223a2233303030227d" },
+      { key: "packet_timeout_height", value: "0-0" },
+      { key: "packet_timeout_timestamp", value: "1111111111" },
+    ],
+  };
+
+  const ack = parseAck(event);
+  t.is(ack.originalPacket.sequence, 789n);
+  t.deepEqual(ack.acknowledgement, toUtf8(""));
+  t.is(ack.acknowledgement.length, 0);
 });
