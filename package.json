@@ -36,7 +36,7 @@
     "@cosmjs/crypto": "^0.32.1",
     "@cosmjs/encoding": "^0.32.1",
     "@cosmjs/faucet-client": "^0.32.1",
-    "@cosmjs/math": "^0.32.1",
+    "@cosmjs/math": "^0.37.0",
     "@cosmjs/proto-signing": "^0.32.1",
     "@cosmjs/stargate": "^0.32.1",
     "@cosmjs/stream": "^0.32.1",
