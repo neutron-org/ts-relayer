@@ -559,6 +559,11 @@
   resolved "https://registry.yarnpkg.com/@cosmjs/utils/-/utils-0.32.1.tgz#0f7f7cbbe38c4a7fd852e698bad4d811fba5f80a"
   integrity sha512-PV9pa0cVPFCNgfQKEOc6RcNFHr5wMQLcDqWoo/ekIoj1AfzAaqnojdnL80u1C9Qf+vOfRGIXubqiU7Tl7QZuig==
 
+"@cosmjs/utils@^0.37.0":
+  version "0.37.0"
+  resolved "https://registry.yarnpkg.com/@cosmjs/utils/-/utils-0.37.0.tgz#40b156bf89bf11e91eb1401655665ee827687a11"
+  integrity sha512-j46yZg+cLBpANGc5sCxtQHJgPGBt5zSKlU+KX9FlDS6JU6q2vZYCpKgucFFpjekEiMagU1eu8cDSCRjTthEM6w==
+
 "@dabh/diagnostics@^2.0.2":
   version "2.0.3"
   resolved "https://registry.yarnpkg.com/@dabh/diagnostics/-/diagnostics-2.0.3.tgz#7f7e97ee9a725dffc7808d93668cc984e1dc477a"
