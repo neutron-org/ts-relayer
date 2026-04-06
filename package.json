@@ -1,6 +1,6 @@
 {
-  "name": "@confio/relayer",
-  "version": "0.12.0",
+  "name": "@neutron-org/relayer",
+  "version": "0.12.1",
   "description": "IBC Relayer in TypeScript",
   "repository": "https://github.com/confio/ts-relayer",
   "license": "MIT",
@@ -26,7 +26,8 @@
     "cov:lcov": "nyc report --reporter=lcov",
     "cov:send": "run-s cov:lcov && codecov",
     "cov:check": "nyc report && nyc check-coverage --lines 100 --functions 100 --branches 100",
-    "proto": "./scripts/proto/get-proto.sh && ./scripts/proto/define-proto.sh && yarn fix"
+    "proto": "./scripts/proto/get-proto.sh && ./scripts/proto/define-proto.sh && yarn fix",
+    "prepublishOnly": "tsc -p tsconfig.json"
   },
   "engines": {
     "node": ">=18"
