@@ -5,15 +5,15 @@ import { FaucetClient } from "@cosmjs/faucet-client";
 import axios from "axios";
 import yaml from "js-yaml";
 
-import { appFile, registryFile } from "../../constants";
-import { Logger } from "../../create-logger";
-import { feeDenom } from "../../types";
-import { deriveAddress } from "../../utils/derive-address";
-import { generateMnemonic } from "../../utils/generate-mnemonic";
-import { isNoExistError } from "../../utils/is-no-exist-error";
-import { loadAndValidateRegistry } from "../../utils/load-and-validate-registry";
-import { resolveOption } from "../../utils/options/resolve-option";
-import { resolveHomeOption } from "../../utils/options/shared/resolve-home-option";
+import { appFile, registryFile } from "../../constants.js";
+import { Logger } from "../../create-logger.js";
+import { feeDenom } from "../../types.js";
+import { deriveAddress } from "../../utils/derive-address.js";
+import { generateMnemonic } from "../../utils/generate-mnemonic.js";
+import { isNoExistError } from "../../utils/is-no-exist-error.js";
+import { loadAndValidateRegistry } from "../../utils/load-and-validate-registry.js";
+import { resolveOption } from "../../utils/options/resolve-option.js";
+import { resolveHomeOption } from "../../utils/options/shared/resolve-home-option.js";
 
 type Flags = {
   readonly home?: string;

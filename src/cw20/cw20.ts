@@ -1,6 +1,6 @@
 import { toBase64, toUtf8 } from "@cosmjs/encoding";
 
-import { CosmWasmSigner } from "..";
+import { CosmWasmSigner } from "../lib/index.js";
 
 // creates it with 6 decimal places
 // '123456789000'

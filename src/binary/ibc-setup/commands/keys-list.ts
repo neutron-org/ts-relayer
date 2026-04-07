@@ -1,15 +1,15 @@
 import os from "os";
 import path from "path";
 
-import { registryFile } from "../../constants";
-import { Logger } from "../../create-logger";
-import { Chain } from "../../types";
-import { deriveAddress } from "../../utils/derive-address";
-import { loadAndValidateApp } from "../../utils/load-and-validate-app";
-import { loadAndValidateRegistry } from "../../utils/load-and-validate-registry";
-import { resolveHomeOption } from "../../utils/options/shared/resolve-home-option";
-import { resolveKeyFileOption } from "../../utils/options/shared/resolve-key-file-option";
-import { resolveMnemonicOption } from "../../utils/options/shared/resolve-mnemonic-option";
+import { registryFile } from "../../constants.js";
+import { Logger } from "../../create-logger.js";
+import { Chain } from "../../types.js";
+import { deriveAddress } from "../../utils/derive-address.js";
+import { loadAndValidateApp } from "../../utils/load-and-validate-app.js";
+import { loadAndValidateRegistry } from "../../utils/load-and-validate-registry.js";
+import { resolveHomeOption } from "../../utils/options/shared/resolve-home-option.js";
+import { resolveKeyFileOption } from "../../utils/options/shared/resolve-key-file-option.js";
+import { resolveMnemonicOption } from "../../utils/options/shared/resolve-mnemonic-option.js";
 
 export type Flags = {
   readonly interactive: boolean;

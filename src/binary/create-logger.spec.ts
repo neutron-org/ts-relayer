@@ -1,7 +1,7 @@
 import test from "ava";
 
-import { defaultLevel, resolveLevel } from "./create-logger";
-import { LoggerFlags } from "./types";
+import { defaultLevel, resolveLevel } from "./create-logger.js";
+import { LoggerFlags } from "./types.js";
 
 function bootstrap(flags: Partial<LoggerFlags> = {}) {
   return resolveLevel({

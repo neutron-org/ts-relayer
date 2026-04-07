@@ -18,18 +18,18 @@ import {
   srcOption,
   srcPort,
   srcTrust,
-} from "../commander-options";
-import { loggerWithErrorBoundary } from "../utils/logger-with-error-boundary";
+} from "../commander-options.js";
+import { loggerWithErrorBoundary } from "../utils/logger-with-error-boundary.js";
 
-import { balances } from "./commands/balances";
-import { channel, defaults as channelDefaults } from "./commands/channel";
-import { channels } from "./commands/channels";
-import { connect } from "./commands/connect";
-import { connections } from "./commands/connections";
-import { ics20, defaults as ics20Defaults } from "./commands/ics20";
-import { init } from "./commands/init";
-import { keysGenerate } from "./commands/keys-generate";
-import { keysList } from "./commands/keys-list";
+import { balances } from "./commands/balances.js";
+import { channel, defaults as channelDefaults } from "./commands/channel.js";
+import { channels } from "./commands/channels.js";
+import { connect } from "./commands/connect.js";
+import { connections } from "./commands/connections.js";
+import { ics20, defaults as ics20Defaults } from "./commands/ics20.js";
+import { init } from "./commands/init.js";
+import { keysGenerate } from "./commands/keys-generate.js";
+import { keysList } from "./commands/keys-list.js";
 
 export const program = new Command();
 

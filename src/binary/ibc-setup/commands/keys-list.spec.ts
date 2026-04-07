@@ -3,9 +3,9 @@ import fs from "fs";
 import test from "ava";
 import sinon from "sinon";
 
-import { generateMnemonic } from "../../utils/generate-mnemonic";
+import { generateMnemonic } from "../../utils/generate-mnemonic.js";
 
-import { Options, run } from "./keys-list";
+import { Options, run } from "./keys-list.js";
 
 const fsReadFileSync = sinon.stub(fs, "readFileSync");
 const consoleLog = sinon.stub(console, "log");

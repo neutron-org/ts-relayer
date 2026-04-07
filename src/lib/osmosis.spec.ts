@@ -7,7 +7,7 @@ import {
   osmosis,
   signingClient,
   TestLogger,
-} from "./helpers";
+} from "./helpers.js";
 
 test.serial("funds account and checks balance", async (t) => {
   const logger = new TestLogger();

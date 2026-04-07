@@ -1,6 +1,6 @@
-export { AckWithMetadata, Endpoint } from "./endpoint";
-export { IbcClient } from "./ibcclient";
-export { Link, RelayInfo, RelayedHeights, PacketFilter } from "./link";
-export { Logger, NoopLogger } from "./logger";
-export * as testutils from "./helpers";
-export { CosmWasmSigner } from "./helpers";
+export { AckWithMetadata, Endpoint } from "./endpoint.js";
+export { IbcClient } from "./ibcclient.js";
+export { Link, RelayInfo, RelayedHeights, PacketFilter } from "./link.js";
+export { Logger, NoopLogger } from "./logger.js";
+export * as testutils from "./helpers.js";
+export { CosmWasmSigner } from "./helpers.js";

@@ -1,28 +1,32 @@
 import { arrayContentEquals, isDefined } from "@cosmjs/utils";
-import { Order, Packet, State } from "cosmjs-types/ibc/core/channel/v1/channel";
-import { Height } from "cosmjs-types/ibc/core/client/v1/client";
+import {
+  Order,
+  Packet,
+  State,
+} from "cosmjs-types/ibc/core/channel/v1/channel.js";
+import { Height } from "cosmjs-types/ibc/core/client/v1/client.js";
 
 import {
   AckWithMetadata,
   Endpoint,
   PacketWithMetadata,
   QueryOpts,
-} from "./endpoint";
+} from "./endpoint.js";
 import {
   buildCreateClientArgs,
   ChannelInfo,
   IbcClient,
   prepareChannelHandshake,
   prepareConnectionHandshake,
-} from "./ibcclient";
-import { Logger, NoopLogger } from "./logger";
+} from "./ibcclient.js";
+import { Logger, NoopLogger } from "./logger.js";
 import {
   parseAcksFromTxEvents,
   secondsFromDateNanos,
   splitPendingPackets,
   timestampFromDateNanos,
   toIntHeight,
-} from "./utils";
+} from "./utils.js";
 
 /**
  * Many actions on link focus on a src and a dest. Rather than add two functions,
@@ -773,26 +777,39 @@ export class Link {
     source: Side,
     acks: readonly AckWithMetadata[],
   ): Promise<number | null> {
+    // Filter out acks with empty acknowledgement bytes
+    const validAcks = acks.filter((ack) => {
+      if (ack.acknowledgement.length === 0) {
+        this.logger.warn(
+          `Skipping ack for packet #${ack.originalPacket.sequence} from ${this.chain(
+            source,
+          )} due to empty acknowledgement bytes`,
+        );
+        return false;
+      }
+      return true;
+    });
+
     this.logger.info(
-      `Relay ${acks.length} acks from ${this.chain(
+      `Relay ${validAcks.length} acks from ${this.chain(
         source,
       )} => ${this.otherChain(source)}`,
     );
-    if (acks.length === 0) {
+    if (validAcks.length === 0) {
       return null;
     }
 
     const { src, dest } = this.getEnds(source);
 
     // check if we need to update client at all
-    const neededHeight = Math.max(...acks.map((x) => x.height)) + 1;
+    const neededHeight = Math.max(...validAcks.map((x) => x.height)) + 1;
     const headerHeight = await this.updateClientToHeight(source, neededHeight);
 
     const proofs = await Promise.all(
-      acks.map((ack) => src.client.getAckProof(ack, headerHeight)),
+      validAcks.map((ack) => src.client.getAckProof(ack, headerHeight)),
     );
     const { height } = await dest.client.acknowledgePackets(
-      acks,
+      validAcks,
       proofs,
       headerHeight,
     );

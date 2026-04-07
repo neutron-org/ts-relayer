@@ -13,10 +13,10 @@ import {
   mnemonicOption,
   srcConnection,
   srcOption,
-} from "../commander-options";
-import { loggerWithErrorBoundary } from "../utils/logger-with-error-boundary";
+} from "../commander-options.js";
+import { loggerWithErrorBoundary } from "../utils/logger-with-error-boundary.js";
 
-import { start, defaults as startDefaults } from "./commands/start";
+import { start, defaults as startDefaults } from "./commands/start.js";
 
 const program = new Command();
 

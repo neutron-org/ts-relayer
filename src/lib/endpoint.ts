@@ -1,15 +1,15 @@
 import { toHex } from "@cosmjs/encoding";
 import { Event, fromTendermintEvent } from "@cosmjs/stargate";
 import { tendermint34, tendermint37 } from "@cosmjs/tendermint-rpc";
-import { Packet } from "cosmjs-types/ibc/core/channel/v1/channel";
+import { Packet } from "cosmjs-types/ibc/core/channel/v1/channel.js";
 
-import { IbcClient } from "./ibcclient";
+import { IbcClient } from "./ibcclient.js";
 import {
   Ack,
   parseAcksFromTxEvents,
   parsePacketsFromBlockResult,
   parsePacketsFromTendermintEvents,
-} from "./utils";
+} from "./utils.js";
 
 export interface PacketWithMetadata {
   packet: Packet;

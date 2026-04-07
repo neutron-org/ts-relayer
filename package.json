@@ -1,14 +1,15 @@
 {
   "name": "@neutron-org/relayer",
-  "version": "0.12.1",
+  "version": "0.13.1",
   "description": "IBC Relayer in TypeScript",
   "repository": "https://github.com/confio/ts-relayer",
   "license": "MIT",
+  "type": "module",
   "keywords": [],
   "browserslist": [
     "maintained node versions"
   ],
-  "main": "build/index.js",
+  "main": "dist/index.js",
   "scripts": {
     "build": "tsc -p tsconfig.json",
     "fix": "run-s fix:*",
@@ -27,44 +28,46 @@
     "cov:send": "run-s cov:lcov && codecov",
     "cov:check": "nyc report && nyc check-coverage --lines 100 --functions 100 --branches 100",
     "proto": "./scripts/proto/get-proto.sh && ./scripts/proto/define-proto.sh && yarn fix",
+    "ava:run": "NODE_OPTIONS='--loader=tsx --no-warnings' ava",
     "prepublishOnly": "tsc -p tsconfig.json"
   },
   "engines": {
-    "node": ">=18"
+    "node": ">=22"
   },
   "dependencies": {
-    "@cosmjs/cosmwasm-stargate": "^0.32.1",
-    "@cosmjs/crypto": "^0.32.1",
-    "@cosmjs/encoding": "^0.32.1",
-    "@cosmjs/faucet-client": "^0.32.1",
-    "@cosmjs/math": "^0.32.1",
-    "@cosmjs/proto-signing": "^0.32.1",
-    "@cosmjs/stargate": "^0.32.1",
-    "@cosmjs/stream": "^0.32.1",
-    "@cosmjs/tendermint-rpc": "^0.32.1",
-    "@cosmjs/utils": "^0.32.1",
+    "protobufjs": "^7.5.4",
+    "@cosmjs/cosmwasm-stargate": "^0.37.0",
+    "@cosmjs/crypto": "^0.37.0",
+    "@cosmjs/encoding": "^0.37.0",
+    "@cosmjs/faucet-client": "^0.37.0",
+    "@cosmjs/math": "^0.37.0",
+    "@cosmjs/proto-signing": "^0.37.0",
+    "@cosmjs/stargate": "^0.37.0",
+    "@cosmjs/stream": "^0.37.0",
+    "@cosmjs/tendermint-rpc": "^0.37.0",
+    "@cosmjs/utils": "^0.37.0",
     "ajv": "7.1.1",
-    "axios": "^1.6.7",
+    "axios": "1.7.9",
     "commander": "7.1.0",
-    "cosmjs-types": "^0.9.0",
+    "cosmjs-types": "^0.10.1",
     "fast-safe-stringify": "2.0.4",
-    "js-yaml": "4.0.0",
+    "js-yaml": "4.1.1",
     "prom-client": "13.1.0",
     "table": "^6.7.1",
     "triple-beam": "1.3.0",
     "winston": "3.3.3"
   },
   "devDependencies": {
-    "@ava/typescript": "^3",
+    "@ava/typescript": "^6.0.0",
     "@changesets/cli": "^2.16.0",
     "@istanbuljs/nyc-config-typescript": "^1.0.1",
     "@types/js-yaml": "^4.0.0",
-    "@types/node": "^18",
+    "@types/node": "^22",
     "@types/sinon": "^9.0.10",
     "@types/triple-beam": "^1.3.2",
     "@typescript-eslint/eslint-plugin": "^5",
     "@typescript-eslint/parser": "^5",
-    "ava": "^4",
+    "ava": "^6.4.1",
     "codecov": "^3.5.0",
     "eslint": "^7.8.0",
     "eslint-config-prettier": "^6.11.0",
@@ -76,15 +79,15 @@
     "prettier": "^3.2.5",
     "sinon": "^9.2.4",
     "ts-node": "^9.0.0",
-    "typescript": "^4.8"
+    "typescript": "^5.7"
   },
   "files": [
-    "build/**/*.js",
-    "build/**/*.d.ts",
-    "!build/**/*.spec.js",
-    "!build/**/*.spec.d.ts",
-    "!build/lib/testutils.js",
-    "!build/lib/testutils.d.ts",
+    "dist/**/*.js",
+    "dist/**/*.d.ts",
+    "!dist/**/*.spec.js",
+    "!dist/**/*.spec.d.ts",
+    "!dist/lib/testutils.js",
+    "!dist/lib/testutils.d.ts",
     "LICENSE",
     "CHANGELOG.md",
     "README.md"
@@ -94,7 +97,7 @@
     "timeout": "120s",
     "typescript": {
       "rewritePaths": {
-        "src/": "build/"
+        "src/": "dist/"
       },
       "compile": false
     }
@@ -108,5 +111,8 @@
   "bin": {
     "ibc-setup": "build/binary/ibc-setup/index.js",
     "ibc-relayer": "build/binary/ibc-relayer/index.js"
+  },
+  "resolutions": {
+    "@scure/base": "~1.2.0"
   }
 }

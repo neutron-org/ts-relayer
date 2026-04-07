@@ -2,7 +2,7 @@ import http from "http";
 
 import client from "prom-client";
 
-import { Logger } from "../create-logger";
+import { Logger } from "../create-logger.js";
 
 let initialized = false;
 

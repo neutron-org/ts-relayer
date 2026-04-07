@@ -1,5 +1,5 @@
-import { getDefaultHomePath } from "../../get-default-home-path";
-import { resolveOption } from "../resolve-option";
+import { getDefaultHomePath } from "../../get-default-home-path.js";
+import { resolveOption } from "../resolve-option.js";
 
 type Params = {
   homeFlag?: string;

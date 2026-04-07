@@ -1,8 +1,8 @@
 import test from "ava";
 
-import { InvalidOptionError } from "../../exceptions/InvalidOptionError";
+import { InvalidOptionError } from "../../exceptions/InvalidOptionError.js";
 
-import { resolveOption } from "./resolve-option";
+import { resolveOption } from "./resolve-option.js";
 
 const stringOption1 = "string option 1";
 const stringOption2 = "string option 2";

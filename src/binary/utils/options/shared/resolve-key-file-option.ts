@@ -1,5 +1,5 @@
-import { AppConfig } from "../../../types";
-import { resolveOption } from "../resolve-option";
+import { AppConfig } from "../../../types.js";
+import { resolveOption } from "../resolve-option.js";
 
 type Params = {
   keyFileFlag?: string;
