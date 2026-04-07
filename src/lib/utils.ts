@@ -5,22 +5,24 @@ import {
   fromTendermintEvent,
 } from "@cosmjs/stargate";
 import {
+  comet1,
+  comet38,
   ReadonlyDateWithNanoseconds,
   ValidatorPubkey as RpcPubKey,
   tendermint34,
   tendermint37,
 } from "@cosmjs/tendermint-rpc";
-import { HashOp, LengthOp } from "cosmjs-types/cosmos/ics23/v1/proofs";
-import { Timestamp } from "cosmjs-types/google/protobuf/timestamp";
-import { Packet } from "cosmjs-types/ibc/core/channel/v1/channel";
-import { Height } from "cosmjs-types/ibc/core/client/v1/client";
+import { HashOp, LengthOp } from "cosmjs-types/cosmos/ics23/v1/proofs.js";
+import { Timestamp } from "cosmjs-types/google/protobuf/timestamp.js";
+import { Packet } from "cosmjs-types/ibc/core/channel/v1/channel.js";
+import { Height } from "cosmjs-types/ibc/core/client/v1/client.js";
 import {
   ClientState as TendermintClientState,
   ConsensusState as TendermintConsensusState,
-} from "cosmjs-types/ibc/lightclients/tendermint/v1/tendermint";
-import { PublicKey as ProtoPubKey } from "cosmjs-types/tendermint/crypto/keys";
+} from "cosmjs-types/ibc/lightclients/tendermint/v1/tendermint.js";
+import { PublicKey as ProtoPubKey } from "cosmjs-types/tendermint/crypto/keys.js";
 
-import { PacketWithMetadata } from "./endpoint";
+import { PacketWithMetadata } from "./endpoint.js";
 
 export interface Ack {
   readonly acknowledgement: Uint8Array;
@@ -187,8 +189,17 @@ export function buildClientState(
 }
 
 export function parsePacketsFromBlockResult(
-  result: tendermint34.BlockResultsResponse | tendermint37.BlockResultsResponse,
+  result:
+    | tendermint34.BlockResultsResponse
+    | tendermint37.BlockResultsResponse
+    | comet38.BlockResultsResponse
+    | comet1.BlockResultsResponse,
 ): Packet[] {
+  // CometBFT 0.38+ uses ABCI++ with finalizeBlockEvents
+  // Older versions use beginBlockEvents and endBlockEvents
+  if ("finalizeBlockEvents" in result) {
+    return parsePacketsFromTendermintEvents(result.finalizeBlockEvents);
+  }
   return parsePacketsFromTendermintEvents([
     ...result.beginBlockEvents,
     ...result.endBlockEvents,
@@ -245,6 +256,7 @@ export function parsePacket({ type, attributes }: Event): Packet {
     {},
   );
 
+  console.log("packet_data_hex: " + attributesObj.packet_data_hex + "\n");
   return Packet.fromPartial({
     sequence: may(BigInt, attributesObj.packet_sequence),
     /** identifies the port on the sending chain. */
@@ -256,8 +268,10 @@ export function parsePacket({ type, attributes }: Event): Packet {
     /** identifies the channel end on the receiving chain. */
     destinationChannel: attributesObj.packet_dst_channel,
     /** actual opaque bytes transferred directly to the application module */
-    data: attributesObj.packet_data
-      ? toUtf8(attributesObj.packet_data)
+    data: attributesObj.packet_data_hex
+      ? Uint8Array.from(
+          Buffer.from(attributesObj.packet_data_hex.replace(/^0x/, ""), "hex"),
+        )
       : undefined,
     /** block height after which the packet times out */
     timeoutHeight: parseHeightAttribute(attributesObj.packet_timeout_height),
@@ -294,13 +308,21 @@ export function parseAck({ type, attributes }: Event): Ack {
     /** identifies the channel end on the receiving chain. */
     destinationChannel: attributesObj.packet_dst_channel,
     /** actual opaque bytes transferred directly to the application module */
-    data: toUtf8(attributesObj.packet_data ?? ""),
+    data: attributesObj.packet_data_hex
+      ? Uint8Array.from(
+          Buffer.from(attributesObj.packet_data_hex.replace(/^0x/, ""), "hex"),
+        )
+      : toUtf8(""),
     /** block height after which the packet times out */
     timeoutHeight: parseHeightAttribute(attributesObj.packet_timeout_height),
     /** block timestamp (in nanoseconds) after which the packet times out */
     timeoutTimestamp: may(BigInt, attributesObj.packet_timeout_timestamp),
   });
-  const acknowledgement = toUtf8(attributesObj.packet_ack ?? "");
+  const acknowledgement = attributesObj.packet_ack_hex
+    ? Uint8Array.from(
+        Buffer.from(attributesObj.packet_ack_hex.replace(/^0x/, ""), "hex"),
+      )
+    : toUtf8(attributesObj.packet_ack ?? "");
   return {
     acknowledgement,
     originalPacket,

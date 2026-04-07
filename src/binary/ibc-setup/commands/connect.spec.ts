@@ -5,13 +5,13 @@ import { assert } from "@cosmjs/utils";
 import test from "ava";
 import sinon from "sinon";
 
-import { testutils } from "../../../lib";
-import { appFile } from "../../constants";
-import { Logger } from "../../create-logger";
-import { signingClient } from "../../utils/signing-client";
+import { testutils } from "../../../lib/index.js";
+import { appFile } from "../../constants.js";
+import { Logger } from "../../create-logger.js";
+import { signingClient } from "../../utils/signing-client.js";
 
-import { gaiaChain, wasmdChain } from "./chains";
-import { Options, run } from "./connect";
+import { gaiaChain, wasmdChain } from "./chains.js";
+import { Options, run } from "./connect.js";
 
 const { TestLogger } = testutils;
 

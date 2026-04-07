@@ -1,6 +1,6 @@
 import commander, { Option } from "commander";
 
-import { defaultLevel, levels } from "./create-logger";
+import { defaultLevel, levels } from "./create-logger.js";
 
 export const homeOption = new Option(
   "--home <path>",

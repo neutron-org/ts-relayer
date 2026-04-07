@@ -1,6 +1,6 @@
 import test from "ava";
 
-import { getDefaultHomePath } from "./get-default-home-path";
+import { getDefaultHomePath } from "./get-default-home-path.js";
 
 const processEnvCopy = { ...process.env };
 

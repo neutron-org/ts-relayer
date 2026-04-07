@@ -1,8 +1,8 @@
 import fs from "fs";
 import readline from "readline";
 
-import { AppConfig } from "../../../types";
-import { resolveOption } from "../resolve-option";
+import { AppConfig } from "../../../types.js";
+import { resolveOption } from "../resolve-option.js";
 
 async function readMnemonicFromStdin(interactive: boolean) {
   if (!interactive) {

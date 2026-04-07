@@ -2,13 +2,18 @@ import fs from "fs";
 import os from "os";
 import path from "path";
 
-import Ajv, { JSONSchemaType } from "ajv";
+import * as AjvModule from "ajv";
+import type { JSONSchemaType } from "ajv";
 import yaml from "js-yaml";
 
-import { appFile } from "../constants";
-import { AppConfig } from "../types";
+import { appFile } from "../constants.js";
+import { AppConfig } from "../types.js";
 
-import { isNoExistError } from "./is-no-exist-error";
+import { isNoExistError } from "./is-no-exist-error.js";
+
+// Handle CommonJS default export
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const Ajv = (AjvModule as any).default || AjvModule;
 
 function readAppYaml(filepath: string) {
   try {
@@ -22,14 +27,14 @@ function readAppYaml(filepath: string) {
   }
 }
 
-export function loadAndValidateApp(home: string) {
+export function loadAndValidateApp(home: string): AppConfig | null {
   const appContents = readAppYaml(path.join(home, appFile));
 
   if (!appContents) {
     return null;
   }
 
-  const app = yaml.load(appContents);
+  const app = yaml.load(appContents) as unknown;
 
   const ajv = new Ajv({ allErrors: true });
   const schema: JSONSchemaType<AppConfig> = {
@@ -51,10 +56,12 @@ export function loadAndValidateApp(home: string) {
 
   if (!validate(app)) {
     const errors = (validate.errors ?? []).map(
-      ({ dataPath, message }) => `"${dataPath}" ${message}`,
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      ({ instancePath, message }: any) => `"${instancePath}" ${message}`,
     );
     throw new Error([`${appFile} validation failed.`, ...errors].join(os.EOL));
   }
 
-  return app;
+  // After successful validation, app is guaranteed to be AppConfig
+  return app as AppConfig;
 }

@@ -1,16 +1,16 @@
 import { assert } from "@cosmjs/utils";
 import test from "ava";
 
-import { Link, testutils } from "..";
+import { Link, testutils } from "../index.js";
 const { gaia, ics20, setup, setupWasmClient, wasmd } = testutils;
 
 // TODO: replace these with be auto-generated helpers from ts-codegen
-import { balance, init, sendTokens } from "./cw20";
+import { balance, init, sendTokens } from "./cw20.js";
 import {
   assertPacketsFromA,
   assertPacketsFromB,
   setupContracts,
-} from "./utils";
+} from "./utils.js";
 
 let codeIds: Record<string, number> = {};
 

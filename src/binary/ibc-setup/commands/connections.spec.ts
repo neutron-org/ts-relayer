@@ -3,13 +3,13 @@ import fs from "fs";
 import test from "ava";
 import sinon from "sinon";
 
-import { testutils } from "../../../lib";
-import { Link } from "../../../lib/link";
-import { Logger } from "../../create-logger";
-import { signingClient } from "../../utils/signing-client";
+import { testutils } from "../../../lib/index.js";
+import { Link } from "../../../lib/link.js";
+import { Logger } from "../../create-logger.js";
+import { signingClient } from "../../utils/signing-client.js";
 
-import { gaiaChain, wasmdChain } from "./chains";
-import { Options, run } from "./connections";
+import { gaiaChain, wasmdChain } from "./chains.js";
+import { Options, run } from "./connections.js";
 
 const { TestLogger } = testutils;
 

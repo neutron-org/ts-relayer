@@ -1,5 +1,5 @@
 import test from "ava";
-import { MsgTransfer } from "cosmjs-types/ibc/applications/transfer/v1/tx";
+import { MsgTransfer } from "cosmjs-types/ibc/applications/transfer/v1/tx.js";
 
 import {
   gaia,
@@ -8,15 +8,18 @@ import {
   setup,
   TestLogger,
   wasmd,
-} from "./helpers";
-import { buildCreateClientArgs, prepareConnectionHandshake } from "./ibcclient";
-import { Link } from "./link";
+} from "./helpers.js";
+import {
+  buildCreateClientArgs,
+  prepareConnectionHandshake,
+} from "./ibcclient.js";
+import { Link } from "./link.js";
 import {
   buildClientState,
   buildConsensusState,
   parseAcksFromTxEvents,
   parsePacketsFromEvents,
-} from "./utils";
+} from "./utils.js";
 
 test.serial("create gaia client on wasmd", async (t) => {
   const logger = new TestLogger();

@@ -3,7 +3,7 @@ import fs from "fs";
 import test from "ava";
 import sinon from "sinon";
 
-import { Options, run } from "./keys-generate";
+import { Options, run } from "./keys-generate.js";
 
 const fsWriteFileSync = sinon.stub(fs, "writeFileSync");
 const consoleLog = sinon.stub(console, "log");

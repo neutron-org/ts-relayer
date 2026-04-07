@@ -1,19 +1,19 @@
 import path from "path";
 
 import { GasPrice } from "@cosmjs/stargate";
-import { Coin } from "cosmjs-types/cosmos/base/v1beta1/coin";
+import { Coin } from "cosmjs-types/cosmos/base/v1beta1/coin.js";
 
-import { registryFile } from "../../constants";
-import { Logger } from "../../create-logger";
-import { borderlessTable } from "../../utils/borderless-table";
-import { loadAndValidateApp } from "../../utils/load-and-validate-app";
-import { loadAndValidateRegistry } from "../../utils/load-and-validate-registry";
-import { resolveHomeOption } from "../../utils/options/shared/resolve-home-option";
-import { resolveKeyFileOption } from "../../utils/options/shared/resolve-key-file-option";
-import { resolveMnemonicOption } from "../../utils/options/shared/resolve-mnemonic-option";
-import { signingClient } from "../../utils/signing-client";
+import { registryFile } from "../../constants.js";
+import { Logger } from "../../create-logger.js";
+import { borderlessTable } from "../../utils/borderless-table.js";
+import { loadAndValidateApp } from "../../utils/load-and-validate-app.js";
+import { loadAndValidateRegistry } from "../../utils/load-and-validate-registry.js";
+import { resolveHomeOption } from "../../utils/options/shared/resolve-home-option.js";
+import { resolveKeyFileOption } from "../../utils/options/shared/resolve-key-file-option.js";
+import { resolveMnemonicOption } from "../../utils/options/shared/resolve-mnemonic-option.js";
+import { signingClient } from "../../utils/signing-client.js";
 
-import { Flags, getAddresses, Options } from "./keys-list";
+import { Flags, getAddresses, Options } from "./keys-list.js";
 
 export async function balances(flags: Flags, logger: Logger) {
   const home = resolveHomeOption({ homeFlag: flags.home });

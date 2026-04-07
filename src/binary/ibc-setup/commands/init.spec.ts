@@ -5,9 +5,9 @@ import test from "ava";
 import axios from "axios";
 import sinon from "sinon";
 
-import { registryFile } from "../../constants";
+import { registryFile } from "../../constants.js";
 
-import { Options, run } from "./init";
+import { Options, run } from "./init.js";
 
 const fsExistSync = sinon.stub(fs, "existsSync");
 const fsMkdirSync = sinon.stub(fs, "mkdirSync");

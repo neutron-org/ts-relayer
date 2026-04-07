@@ -1,6 +1,6 @@
 import { assert } from "@cosmjs/utils";
 import test from "ava";
-import { State } from "cosmjs-types/ibc/core/channel/v1/channel";
+import { State } from "cosmjs-types/ibc/core/channel/v1/channel.js";
 
 import {
   gaia,
@@ -10,10 +10,10 @@ import {
   TestLogger,
   transferTokens,
   wasmd,
-} from "./helpers";
-import { prepareChannelHandshake } from "./ibcclient";
-import { Link, RelayedHeights } from "./link";
-import { secondsFromDateNanos, splitPendingPackets } from "./utils";
+} from "./helpers.js";
+import { prepareChannelHandshake } from "./ibcclient.js";
+import { Link, RelayedHeights } from "./link.js";
+import { secondsFromDateNanos, splitPendingPackets } from "./utils.js";
 
 test.serial("establish new client-connection", async (t) => {
   const logger = new TestLogger();

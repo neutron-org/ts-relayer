@@ -1,8 +1,8 @@
 import test from "ava";
 
-import { gaia, ics20, randomAddress, setup, wasmd } from "./helpers";
-import { Link } from "./link";
-import { parseAcksFromTxEvents } from "./utils";
+import { gaia, ics20, randomAddress, setup, wasmd } from "./helpers.js";
+import { Link } from "./link.js";
+import { parseAcksFromTxEvents } from "./utils.js";
 
 test.serial("submit multiple tx, query all packets", async (t) => {
   // setup a channel

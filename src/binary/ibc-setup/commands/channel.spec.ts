@@ -5,16 +5,16 @@ import { assert } from "@cosmjs/utils";
 import test from "ava";
 import sinon from "sinon";
 
-import { testutils } from "../../../lib";
-import { Link } from "../../../lib/link";
-import { Logger } from "../../create-logger";
-import { indent } from "../../utils/indent";
-import { signingClient } from "../../utils/signing-client";
+import { testutils } from "../../../lib/index.js";
+import { Link } from "../../../lib/link.js";
+import { Logger } from "../../create-logger.js";
+import { indent } from "../../utils/indent.js";
+import { signingClient } from "../../utils/signing-client.js";
 
 const { TestLogger } = testutils;
 
-import { gaiaChain, wasmdChain } from "./chains";
-import { Options, run } from "./channel";
+import { gaiaChain, wasmdChain } from "./chains.js";
+import { Options, run } from "./channel.js";
 
 const fsReadFileSync = sinon.stub(fs, "readFileSync");
 const consoleLog = sinon.stub(console, "log");

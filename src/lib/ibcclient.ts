@@ -25,9 +25,13 @@ import {
   tendermint37,
 } from "@cosmjs/tendermint-rpc";
 import { arrayContentEquals, assert, sleep } from "@cosmjs/utils";
-import { Any } from "cosmjs-types/google/protobuf/any";
-import { MsgTransfer } from "cosmjs-types/ibc/applications/transfer/v1/tx";
-import { Order, Packet, State } from "cosmjs-types/ibc/core/channel/v1/channel";
+import { Any } from "cosmjs-types/google/protobuf/any.js";
+import { MsgTransfer } from "cosmjs-types/ibc/applications/transfer/v1/tx.js";
+import {
+  Order,
+  Packet,
+  State,
+} from "cosmjs-types/ibc/core/channel/v1/channel.js";
 import {
   MsgAcknowledgement,
   MsgChannelOpenAck,
@@ -36,34 +40,36 @@ import {
   MsgChannelOpenTry,
   MsgRecvPacket,
   MsgTimeout,
-} from "cosmjs-types/ibc/core/channel/v1/tx";
-import { Height } from "cosmjs-types/ibc/core/client/v1/client";
+} from "cosmjs-types/ibc/core/channel/v1/tx.js";
+import { Height } from "cosmjs-types/ibc/core/client/v1/client.js";
 import {
   MsgCreateClient,
   MsgUpdateClient,
-} from "cosmjs-types/ibc/core/client/v1/tx";
-import { Version } from "cosmjs-types/ibc/core/connection/v1/connection";
+} from "cosmjs-types/ibc/core/client/v1/tx.js";
+import { Version } from "cosmjs-types/ibc/core/connection/v1/connection.js";
 import {
   MsgConnectionOpenAck,
   MsgConnectionOpenConfirm,
   MsgConnectionOpenInit,
   MsgConnectionOpenTry,
-} from "cosmjs-types/ibc/core/connection/v1/tx";
+} from "cosmjs-types/ibc/core/connection/v1/tx.js";
 import {
   ClientState as TendermintClientState,
   ConsensusState as TendermintConsensusState,
   Header as TendermintHeader,
-} from "cosmjs-types/ibc/lightclients/tendermint/v1/tendermint";
+} from "cosmjs-types/ibc/lightclients/tendermint/v1/tendermint.js";
 import {
-  blockIDFlagFromJSON,
   Commit,
   Header,
   SignedHeader,
-} from "cosmjs-types/tendermint/types/types";
-import { ValidatorSet } from "cosmjs-types/tendermint/types/validator";
+} from "cosmjs-types/tendermint/types/types.js";
+import {
+  blockIDFlagFromJSON,
+  ValidatorSet,
+} from "cosmjs-types/tendermint/types/validator.js";
 
-import { Logger, NoopLogger } from "./logger";
-import { IbcExtension, setupIbcExtension } from "./queries/ibc";
+import { Logger, NoopLogger } from "./logger.js";
+import { IbcExtension, setupIbcExtension } from "./queries/ibc.js";
 import {
   Ack,
   buildClientState,
@@ -75,7 +81,7 @@ import {
   subtractBlock,
   timestampFromDateNanos,
   toIntHeight,
-} from "./utils";
+} from "./utils.js";
 
 type CometHeader = tendermint34.Header | tendermint37.Header | comet38.Header;
 type CometCommitResponse =

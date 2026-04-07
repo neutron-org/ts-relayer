@@ -1,9 +1,14 @@
-import jsonStringify from "fast-safe-stringify";
+import * as jsonStringifyModule from "fast-safe-stringify";
 import { MESSAGE } from "triple-beam";
 import winston from "winston";
 
-import { LoggerFlags } from "./types";
-import { resolveOption } from "./utils/options/resolve-option";
+import { LoggerFlags } from "./types.js";
+import { resolveOption } from "./utils/options/resolve-option.js";
+
+// Handle CommonJS default export
+const jsonStringify =
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  (jsonStringifyModule as any).default || jsonStringifyModule;
 
 // Re-export Logger interface with type-safe child method.
 export interface Logger extends Omit<winston.Logger, "child"> {
@@ -37,7 +42,8 @@ export function resolveLevel(
     return [defaultLevel, level];
   }
 
-  const levelValue = levels[level ?? "error"];
+  const resolvedLevel = level ?? "error";
+  const levelValue = levels[resolvedLevel as Level];
 
   if (flags.verbose && levelValue < levels.verbose) {
     return ["verbose", null];
@@ -48,7 +54,7 @@ export function resolveLevel(
   }
 
   if (level) {
-    return [level, null];
+    return [level as Level, null];
   }
 
   return [defaultLevel, null];

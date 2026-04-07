@@ -1,4 +1,4 @@
-import { InvalidOptionError } from "../../exceptions/InvalidOptionError";
+import { InvalidOptionError } from "../../exceptions/InvalidOptionError.js";
 
 type Args<T = string> = Array<(T | undefined | null) | (() => T | null)>;
 

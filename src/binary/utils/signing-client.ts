@@ -2,9 +2,9 @@ import { stringToPath } from "@cosmjs/crypto";
 import { DirectSecp256k1HdWallet } from "@cosmjs/proto-signing";
 import { GasPrice } from "@cosmjs/stargate";
 
-import { IbcClient, IbcClientOptions } from "../../lib/ibcclient";
-import { Logger } from "../../lib/logger";
-import { Chain } from "../types";
+import { IbcClient, IbcClientOptions } from "../../lib/ibcclient.js";
+import { Logger } from "../../lib/logger.js";
+import { Chain } from "../types.js";
 
 export async function signingClient(
   chain: Chain,

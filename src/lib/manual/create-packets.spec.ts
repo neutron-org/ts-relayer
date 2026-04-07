@@ -12,9 +12,9 @@ yarn build && yarn test:unit ./src/lib/manual/create-packets.spec.ts
 
 import test from "ava";
 
-import { gaia, setup, TestLogger, transferTokens, wasmd } from "../helpers";
+import { gaia, setup, TestLogger, transferTokens, wasmd } from "../helpers.js";
 
-import { channels } from "./consts";
+import { channels } from "./consts.js";
 
 test.serial.skip("send valid packets on existing channel", async (t) => {
   // create the basic clients
