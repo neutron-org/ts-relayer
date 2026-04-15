@@ -1,6 +1,6 @@
 {
-  "name": "@confio/relayer",
-  "version": "0.13.0",
+  "name": "@neutron-org/relayer",
+  "version": "0.13.1",
   "description": "IBC Relayer in TypeScript",
   "repository": "https://github.com/confio/ts-relayer",
   "license": "MIT",
@@ -28,7 +28,8 @@
     "cov:send": "run-s cov:lcov && codecov",
     "cov:check": "nyc report && nyc check-coverage --lines 100 --functions 100 --branches 100",
     "proto": "./scripts/proto/get-proto.sh && ./scripts/proto/define-proto.sh && yarn fix",
-    "ava:run": "NODE_OPTIONS='--loader=tsx --no-warnings' ava"
+    "ava:run": "NODE_OPTIONS='--loader=tsx --no-warnings' ava",
+    "prepublishOnly": "tsc -p tsconfig.json"
   },
   "engines": {
     "node": ">=22"
@@ -48,7 +49,6 @@
     "ajv": "7.1.1",
     "axios": "1.7.9",
     "commander": "7.1.0",
-
     "cosmjs-types": "^0.10.1",
     "fast-safe-stringify": "2.0.4",
     "js-yaml": "4.1.1",
