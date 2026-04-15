@@ -109,8 +109,8 @@
     ]
   },
   "bin": {
-    "ibc-setup": "build/binary/ibc-setup/index.js",
-    "ibc-relayer": "build/binary/ibc-relayer/index.js"
+    "ibc-setup": "dist/binary/ibc-setup/index.js",
+    "ibc-relayer": "dist/binary/ibc-relayer/index.js"
   },
   "resolutions": {
     "@scure/base": "~1.2.0"
